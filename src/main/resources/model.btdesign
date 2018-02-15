@@ -1,0 +1,94 @@
+Application BootExample {
+
+
+basePackage=com.shoppyng.store
+
+Module cart {
+
+		Resource FrontResource {
+			String front return="front/overview";
+		}
+
+
+
+		
+		Resource ProductResource {
+			@Product findProductById(Long id) GET path="/findProductById/{id}";
+		}
+
+		Service ProductService {
+			findById => ProductRepository.findById;
+			findAll => ProductRepository.findAll;
+			save => ProductRepository.save;
+		}
+		
+		
+		Entity Product {
+			Long id databaseColumn="PRODUCT_ID" databaseType="number"  digits="10,0" key
+			String productName notBlank databaseColumn="PRODUCT_NAME"
+			Float price
+
+			Repository ProductRepository {
+				findById;
+				save;
+				delete;
+				findAll;
+			}
+		}
+		
+		
+		
+		
+		Entity Item {
+			Long id databaseColumn="ITEM_ID" databaseType="number"  digits="10,0" key
+			- @Cart cart <-> items databaseColumn="CART_ID"
+			- @Product product	databaseColumn="PRODUCT_ID"
+			Long quantity databaseColumn="QUANTITY"
+			
+			Repository ItemRepository {
+				findById;
+				save;
+				delete;
+				findAll;
+			}
+		}
+		
+		
+		Resource CartResource {
+			show => CartService.findById;
+			String createForm;
+			create => CartService.save;
+			showAll => CartService.findAll;
+			addProductToCart GET path="/addProductToCart/{cartId}/{productId}/{quantity}" => CartService.addProduct;
+			removeProduct GET path="/removeProduct/{cartId}/{productId}" => CartService.removeProduct;
+			Float totalPrice GET path="/totalPrice/{cartId}" => CartService.totalPrice;
+		}
+
+		Service CartService {
+			findById => CartRepository.findById;
+			findAll => CartRepository.findAll;
+			save => CartRepository.save;
+			addProduct(Long cartId, Long productId, Long quatity);
+//			addProduct(Long cartId, Long productId);
+			removeProduct(Long cartId, Long productId);
+			Float totalPrice(Long cartId);
+		}
+		
+		
+		Entity Cart {
+			Long id databaseColumn="CART_ID" databaseType="number"  digits="10,0" key
+			Long buyerId databaseColumn="BUYER_ID" databaseType="number"  digits="10,0"
+			- List<@Item> items <-> cart
+
+			Repository CartRepository {
+				findById;
+				save;
+				delete;
+				findAll;
+			}
+		}
+		
+
+	}
+
+}
