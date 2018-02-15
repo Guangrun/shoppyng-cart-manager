@@ -1,6 +1,6 @@
 Framework: Spring-boot, Sculptor
 
-Designed with Domain Driven Design (DDD), exactly, with [Sculptor Framework](http://sculptorgenerator.org) (a tool implementing DDD). Entities, Repositories, Services, Controllers(REST Webservices) are put in src/main/resources/model.btdesign
+Designed with Domain Driven Design (DDD), exactly, with [Sculptor Framework](http://sculptorgenerator.org) (a tool implementing DDD). Entities, Repositories, Services, Controllers(REST Webservices) are created.
 
 Codes are written in the methodology Test driven Development (TDD)
 
