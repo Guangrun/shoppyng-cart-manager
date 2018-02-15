@@ -9,6 +9,7 @@ To launch the application, execute the following commands(Maven and Java 1.8 req
 
 
 mvn clean install
+
 java -jar target/shoppyng-cart-manager-3.1.0.jar
 
 
